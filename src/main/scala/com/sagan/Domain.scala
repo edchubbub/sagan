@@ -2,9 +2,13 @@ package com.sagan
 
 import java.security.Timestamp
 
+import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, PredefinedFromEntityUnmarshallers, Unmarshaller}
 import com.sksamuel.elastic4s.ElasticDsl.properties
 import com.sksamuel.elastic4s.fields.TextField
 import com.sksamuel.elastic4s.requests.mappings.MappingDefinition
+import protobuf.user.{User => ProtoUser}
+import scalapb.json4s.JsonFormat
+import scalapb.{GeneratedMessage, GeneratedMessageCompanion}
 
 object Domain {
 
@@ -31,6 +35,14 @@ object Domain {
         TextField("dateCreated")
       )
     }
+  }
+}
+
+
+trait ClientMarshallingProtocol {
+
+  implicit def unmarshalProto[T <: GeneratedMessage with scalapb.Message[T] : GeneratedMessageCompanion : Manifest]: FromEntityUnmarshaller[T] = {
+    Unmarshaller.stringUnmarshaller.map(JsonFormat.fromJsonString[T](_))
   }
 
 }

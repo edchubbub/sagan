@@ -48,5 +48,4 @@ object Elastic {
     resp foreach (search => println(s"There were ${search.totalHits} total hits"))
   }
 
-
 }

@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package protobuf;
+import "address.proto";
+import "google/protobuf/timestamp.proto";
+
+message User {
+    required string id = 1;
+    required string name = 2;
+    required Address address = 3;
+    required string email = 4;
+    required int32 age = 5;
+    required string dateCreated = 6;
+}

@@ -4,11 +4,13 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
+import com.sagan.Domain.User
+import protobuf.user.{User => ProtoUser}
 
 import scala.concurrent.ExecutionContextExecutor
 import scala.io.StdIn
 
-object Init {
+object Init extends ClientMarshallingProtocol {
 
   def main(args: Array[String]): Unit = {
 
@@ -17,7 +19,11 @@ object Init {
 
     val route =
       path("add") {
-        post ( complete("add user") )
+        entity(as[ProtoUser]) { protoUser =>
+          post {
+            complete(s"add user user: ${protoUser} name: ${protoUser.name}")
+          }
+        }
       } ~
       path("list") {
         get ( complete("list all user") )
