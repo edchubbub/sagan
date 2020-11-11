@@ -2,6 +2,7 @@ version: '2.2'
 services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    command: ["elasticsearch", "-Elogger.level=DEBUG"]
     container_name: es01
     environment:
       - node.name=es01
@@ -22,6 +23,7 @@ services:
       - elastic
   es02:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    command: ["elasticsearch", "-Elogger.level=DEBUG"]
     container_name: es02
     environment:
       - node.name=es02
@@ -40,6 +42,7 @@ services:
       - elastic
   es03:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    command: ["elasticsearch", "-Elogger.level=DEBUG"]
     container_name: es03
     environment:
       - node.name=es03
